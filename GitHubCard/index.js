@@ -53,18 +53,46 @@ const followersArray = [];
       </div>
     </div>
 */
-function gitHubCardMaker(obj){
+function gitHubCardMaker( {avatar_url, bio, followers, following, name, username, location, html_url} ){
+  // create all the elements
+  const cardContainer = document.querySelector('.cards')
   const card = document.createElement('div')
   const userImg = document.createElement('img')
   const cardInfo = document.createElement('div')
-  const name = document.createElement('h3')
-  const username = document.createElement('p')
-  const location = document.createElement('p')
+  const userFullName = document.createElement('h3')
+  const userLoginName = document.createElement('p')
+  const userLocation = document.createElement('p')
   const userProfile = document.createElement('p')
-  const followers = document.createElement('p')
-  const following = document.createElement('p')
-  const bio = document.createElement('p') 
+  const followerCount = document.createElement('p')
+  const followingCount = document.createElement('p')
+  const userBio = document.createElement('p')
+  // add classes where needed
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  userFullName.classList.add('name')
+  userLoginName.classList.add('username')
+  // append children to correct parents
+  cardContainer.appendChild(card)
+  card.appendChild(userImg)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(userFullName)
+  cardInfo.appendChild(userLoginName)
+  cardInfo.appendChild(userLocation)
+  cardInfo.appendChild(userProfile)
+  cardInfo.appendChild(followerCount)
+  cardInfo.appendChild(followingCount)
+  cardInfo.appendChild(userBio)
+  // add attributes and textContent
+  userImg.src = avatar_url
+  userFullName.textContent = name
+  userLoginName.textContent = username
+  userLocation.textContent = location
+  userProfile.textContent = html_url
+  followerCount.textContent = followers
+  followingCount.textContent = following
+  userBio.textContent = bio
 
+  return card
 }
 
 /*
