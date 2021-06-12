@@ -6,7 +6,7 @@ import axios from 'axios'
 */
 
 const myGithubInfo = axios.get('https://api.github.com/users/chisao101')
-console.log(myGithubInfo)
+// console.log(myGithubInfo)
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -21,6 +21,10 @@ console.log(myGithubInfo)
     and append the returned markup to the DOM as a child of .cards
 */
 
+.then((gitHubInfo) => {
+  cardContainer.appendChild(gitHubCardMaker(gitHubInfo.data))
+})
+
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
     follow this link in your browser https://api.github.com/users/<Your github name>/followers,
@@ -32,7 +36,15 @@ console.log(myGithubInfo)
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['Lothelo', 'rosecrowned', 'L1tCraig', 'PVigar88', 'anushazia'];
+
+followersArray.forEach((username) => {
+  axios.get(`https://api.github.com/users/${username}`)
+  .then((gitHubInfo) => {
+    cardContainer.appendChild(gitHubCardMaker(gitHubInfo.data))
+  })
+})
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -54,8 +66,7 @@ const followersArray = [];
     </div>
 */
 function gitHubCardMaker( {avatar_url, bio, followers, following, name, username, location, html_url} ){
-  // create all the elements
-  const cardContainer = document.querySelector('.cards')
+  // create all the elements  
   const card = document.createElement('div')
   const userImg = document.createElement('img')
   const cardInfo = document.createElement('div')
@@ -71,8 +82,7 @@ function gitHubCardMaker( {avatar_url, bio, followers, following, name, username
   cardInfo.classList.add('card-info')
   userFullName.classList.add('name')
   userLoginName.classList.add('username')
-  // append children to correct parents
-  cardContainer.appendChild(card)
+  // append children to correct parents  
   card.appendChild(userImg)
   card.appendChild(cardInfo)
   cardInfo.appendChild(userFullName)
@@ -92,8 +102,15 @@ function gitHubCardMaker( {avatar_url, bio, followers, following, name, username
   followingCount.textContent = following
   userBio.textContent = bio
 
+  // console.log(username)
+
   return card
 }
+
+
+const cardContainer = document.querySelector('.cards')
+cardContainer.appendChild(card)
+
 
 /*
   List of LS Instructors Github username's:
